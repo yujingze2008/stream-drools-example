@@ -35,15 +35,15 @@ public class KafkaMocker
 
         Producer<String,String> producer = new KafkaProducer(properties);
 
-        for(int i=0;i<10;i++){
+        for(int i=0;i<1000;i++){
             JSONObject json = new JSONObject();
             json.put("name","zhangsan");
             json.put("creditScore",new Random().nextInt(1000));
-
-            System.out.println(json.toString());
-            ProducerRecord record = new ProducerRecord("rules_event","ababab");
+            ProducerRecord record = new ProducerRecord("rules_event",json.toString());
             producer.send(record);
         }
+
+        producer.flush();
 
     }
 
