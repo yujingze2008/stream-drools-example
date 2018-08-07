@@ -1,10 +1,16 @@
-package com.myspace.mytest;
+package com.gitee.code4fun.drools.entitys;
 
 /**
  * @author yujingze
  * @data 2018/8/6
  */
-public class approve {
+public class Approve {
+
+    private String name;
+
+    private Integer creditScore;
+
+    private Boolean approved;
 
     public String getName() {
         return name;
@@ -29,11 +35,5 @@ public class approve {
     public void setApproved(Boolean approved) {
         this.approved = approved;
     }
-
-    private String name;
-
-    private Integer creditScore;
-
-    private Boolean approved;
 
 }

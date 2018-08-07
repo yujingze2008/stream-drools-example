@@ -24,7 +24,7 @@ import java.util.Map;
  * @author yujingze
  * @data 18/7/23
  */
-public class SparkStreamingRules {
+public class SparkStreamingExample {
 
 
     public static void main(String[] args) throws Exception{
@@ -38,7 +38,7 @@ public class SparkStreamingRules {
         //StatelessKieSession session = container.newStatelessKieSession();
 
         SparkConf conf = new SparkConf();
-        conf.setAppName("SparkStreamingRules");
+        conf.setAppName("SparkStreamingExample");
         JavaStreamingContext jsc = new JavaStreamingContext(conf,new Duration(3000));
 
         Map<String,Integer> topicmap = new HashMap<String,Integer>();

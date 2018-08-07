@@ -16,7 +16,7 @@ import java.util.Random;
 /**
  * Unit test for simple App.
  */
-public class KafkaMocker
+public class KafkaDataMocker
 {
     /**
      * Rigorous Test :-)
@@ -71,7 +71,7 @@ public class KafkaMocker
     }
 
     public static void main(String[] args) throws Exception{
-        KafkaMocker mocker = new KafkaMocker();
+        KafkaDataMocker mocker = new KafkaDataMocker();
         mocker.send();
         //mocker.receive();
     }
