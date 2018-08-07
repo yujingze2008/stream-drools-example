@@ -1,4 +1,4 @@
-package com.gitee.code4fun;
+package com.gitee.code4fun.spark;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

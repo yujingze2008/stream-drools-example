@@ -1,4 +1,4 @@
-package com.gitee.code4fun;
+package com.gitee.code4fun.storm;
 
 /**
  * @author yujingze

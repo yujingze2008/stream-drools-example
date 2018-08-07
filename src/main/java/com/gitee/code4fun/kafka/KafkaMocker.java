@@ -1,7 +1,6 @@
-package com.gitee.code4fun;
+package com.gitee.code4fun.kafka;
 
 
-import com.alibaba.fastjson.JSONObject;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -35,11 +34,17 @@ public class KafkaMocker
 
         Producer<String,String> producer = new KafkaProducer(properties);
 
-        for(int i=0;i<1000;i++){
-            JSONObject json = new JSONObject();
+        for(int i=0;i<100000;i++){
+            /*JSONObject json = new JSONObject();
             json.put("name","zhangsan");
-            json.put("creditScore",new Random().nextInt(1000));
-            ProducerRecord record = new ProducerRecord("rules_event",json.toString());
+            json.put("creditScore",new Random().nextInt(1000));*/
+
+            StringBuffer sb = new StringBuffer();
+            sb.append("zhangsan"+i);
+            sb.append(",");
+            sb.append(new Random().nextInt(1000));
+
+            ProducerRecord record = new ProducerRecord("rules_event",sb.toString());
             producer.send(record);
         }
 

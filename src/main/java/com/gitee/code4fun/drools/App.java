@@ -1,4 +1,4 @@
-package com.gitee.code4fun;
+package com.gitee.code4fun.drools;
 
 
 import com.myspace.mytest.approve;

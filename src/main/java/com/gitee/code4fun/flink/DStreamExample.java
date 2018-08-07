@@ -1,4 +1,4 @@
-package com.gitee.code4fun;
+package com.gitee.code4fun.flink;
 
 import com.myspace.mytest.approve;
 import org.apache.flink.api.common.functions.MapFunction;
