@@ -31,7 +31,8 @@ public class DSetBatchExample {
         rulesData.print();
 
         rulesData.collect().forEach(tuple -> {
-            FactType factType = DroolsHelper.getInstance().getFactType("com.myspace.mytest", "approve");
+            DroolsHelper.getInstance().loadGav("com.myspace", "flink_rule", "LATEST");
+            FactType factType = DroolsHelper.getInstance().getFactType("com.myspace.flink_rule", "approve");
             Object applicant = null;
             try {
                 applicant = factType.newInstance();
@@ -46,6 +47,7 @@ public class DSetBatchExample {
             session.execute(applicant);
 
             System.out.println("申请人：" + factType.get(applicant, "name") + "，评分：" + factType.get(applicant, "creditScore") + ",是否可以申请批准" + factType.get(applicant, "approved"));
+
         });
 
     }

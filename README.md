@@ -10,6 +10,7 @@ spark、flink、storm整合drools的例子
 #### 安装教程
 
 1. drools-workbench可以百度一下安装
+2. 规则需要的Bean一般采用FactType方式，如果使用实体Bean，请将项目中的beans所属包名与wb中一致
 
 #### 使用说明
 

@@ -1,11 +1,11 @@
 package com.gitee.code4fun.flink;
 
 import com.gitee.code4fun.drools.DroolsHelper;
-import com.gitee.code4fun.drools.entitys.Approve;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.kie.api.runtime.KieSession;
+import org.kie.api.definition.type.FactType;
+import org.kie.api.runtime.StatelessKieSession;
 
 /**
  * @author yujingze
@@ -30,18 +30,26 @@ public class DStreamSocketExample {
 
                 String[] ss = s.split(",");
                 DroolsHelper.getInstance().loadGav("com.myspace", "flink_rule", "LATEST");
-                KieSession kieSession = DroolsHelper.getInstance().getKieSession();
-                Approve bean = new Approve();
-                bean.setName(ss[0]);
-                bean.setCreditScore(Integer.parseInt(ss[1]));
-                kieSession.insert(bean);
-                kieSession.dispose();
+
+                FactType factType = DroolsHelper.getInstance().getFactType("com.myspace.flink_rule", "approve");
+                Object applicant = null;
+                try {
+                    applicant = factType.newInstance();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                factType.set(applicant, "name", ss[0]);
+                factType.set(applicant, "creditScore", Integer.parseInt(ss[1]));
+                StatelessKieSession session = DroolsHelper.getInstance().getStatelessSession();
+                session.execute(applicant);
 
                 long end = System.currentTimeMillis();
 
                 System.out.println("cast:" + (end - begin) + " ms");
 
-                return bean.getName() + "," + bean.getCreditScore() + "," + bean.getApproved();
+                return factType.get(applicant, "name") + "," + factType.get(applicant, "creditScore") + "," + factType.get(applicant, "approved");
 
             }
         });
