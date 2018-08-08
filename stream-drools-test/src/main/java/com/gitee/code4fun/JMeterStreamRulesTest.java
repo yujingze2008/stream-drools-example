@@ -23,6 +23,7 @@ public class JMeterStreamRulesTest extends AbstractJavaSamplerClient {
         sr.setSampleLabel("stream-drools-sample");
         try {
             sr.sampleStart();
+            long start = System.currentTimeMillis();
             String eventId = UUID.randomUUID().toString().replaceAll("-", "");
             StringBuffer message = new StringBuffer();
             message.append(eventId)
@@ -35,6 +36,10 @@ public class JMeterStreamRulesTest extends AbstractJavaSamplerClient {
                 result = JedisUtils.get(eventId);
                 if (result != null && !"".equals(result)) {
                     break;
+                }
+                long current = System.currentTimeMillis();
+                if((current-start) > (3*1000)){
+                    throw new RuntimeException("request timeout error");
                 }
             }
             sr.setResponseData(result);

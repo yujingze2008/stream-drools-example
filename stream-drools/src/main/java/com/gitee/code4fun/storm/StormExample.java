@@ -15,7 +15,7 @@ public class StormExample {
     public static void main(String[] args) throws Exception {
 
         TopologyBuilder builder = new TopologyBuilder();
-        KafkaSpoutConfig config = KafkaSpoutConfig.builder("localhost:9092,localhost:9093,localhost:9094", "rules_event")
+        KafkaSpoutConfig config = KafkaSpoutConfig.builder(com.gitee.code4fun.util.Config.KAFKA_BOOTSTRAP_SERVERS, "rules_event")
                 .setGroupId("storm-kafka-group").build();
         KafkaSpout<String, String> kafkaSpout = new KafkaSpout<>(config);
         builder.setSpout("kafkaSpout", kafkaSpout);

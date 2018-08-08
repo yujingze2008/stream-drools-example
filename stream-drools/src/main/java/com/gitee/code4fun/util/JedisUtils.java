@@ -18,20 +18,20 @@ public class JedisUtils {
 
     static {
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxTotal(600);
-        config.setMaxIdle(300);
+        config.setMaxTotal(Config.REDIS_MAX_TOTAL);
+        config.setMaxIdle(Config.REDIS_MAX_IDLE);
         config.setMaxWaitMillis(1000L);
-        config.setTestOnBorrow(false);
-        jedisPool = new JedisPool(config, "localhost", 6379);
+        config.setTestOnBorrow(Config.REDIS_TESTONBORROW);
+        jedisPool = new JedisPool(config, Config.REDIS_HOST, Config.REDIS_PORT);
     }
 
     public static void set(String key, String value) {
         Jedis jedis = jedisPool.getResource();
-        try{
+        try {
             jedis.set(key, value);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             release(jedis);
         }
     }
@@ -41,16 +41,16 @@ public class JedisUtils {
         Jedis jedis = jedisPool.getResource();
         try {
             value = jedis.get(key);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             release(jedis);
         }
         return value;
     }
 
-    public static void release(Jedis jedis){
-        if(jedis != null){
+    public static void release(Jedis jedis) {
+        if (jedis != null) {
             jedisPool.returnResource(jedis);
         }
     }

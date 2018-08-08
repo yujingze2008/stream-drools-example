@@ -21,31 +21,10 @@ public class DroolsBolt extends BaseBasicBolt {
 
     @Override
     public void execute(Tuple tuple, BasicOutputCollector basicOutputCollector) {
-        try {
-            long begin = System.currentTimeMillis();
-            FactType factType = DroolsHelper.getInstance().getFactType("com.myspace.flink_rule", "approve");
-            Object applicant = factType.newInstance();
-            String[] ss = String.valueOf(tuple.getValueByField("value")).split(",");
-            String eventId = ss[0];
-            String name = ss[1];
-            String score = ss[2];
-            factType.set(applicant, "name", name);
-            factType.set(applicant, "creditScore", Integer.parseInt(score));
-            StatelessKieSession session = DroolsHelper.getInstance().getStatelessSession();
-            session.execute(applicant);
 
-            long end = System.currentTimeMillis();
-            System.out.println("cast:" + (end - begin) + " ms");
+        String message = String.valueOf(tuple.getValueByField("value"));
 
-            String result = factType.get(applicant, "name") + "," + factType.get(applicant, "creditScore") + "," + factType.get(applicant, "approved");
-
-            System.out.println(result);
-
-            JedisUtils.set(eventId,result);
-
-        } catch (Exception e) {
-            System.out.println("error!!!");
-        }
+        DroolsHelper.getInstance().fireExampleRules(message);
 
     }
 
