@@ -22,3 +22,6 @@
 hs_err_pid*
 .idea
 logs
+stream-drools/*.iml
+stream-drools-test/*.iml
+target
